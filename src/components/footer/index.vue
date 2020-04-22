@@ -34,32 +34,26 @@
 </script>
 
 <style lang="stylus" scoped>
-@import '../../assets/css/common.styl';
+@import '../../assets/css/common.styl'
 
-.footer {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  height: 100%;
-  background: #fff;
-  border-top: 1rem solid $border-color;
-  padding: 0 40rem;
+.footer
+  box-shadow 0 1px 2px 0 rgba(0, 0, 0, .05)
+  height 100%
+  background #fff
+  border-top 1rem solid $border-color
+  padding 0 40rem
 
-  .nav-list {
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .nav-list
+    height 100%
+    display flex
+    justify-content space-between
+    align-items center
 
-    .nav-item {
-      .iconfont {
-        color: $text-color;
-      }
+    .nav-item
+      .iconfont
+        color $text-color
 
-      &.active {
-        .iconfont {
-          color: $primary-color;
-        }
-      }
-    }
-  }
-}
+      &.active
+        .iconfont
+          color $primary-color
 </style>
