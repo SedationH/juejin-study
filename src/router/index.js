@@ -7,6 +7,8 @@ import Pin from '../views/pin'
 import Search from '../views/search'
 import Book from '../views/book'
 
+import ArticleList from '../views/article-list'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,6 +18,10 @@ const routes = [
   }, {
     path: '/home',
     component: Home,
+    children: [{
+      path: '/home/*',
+      component: ArticleList
+    }]
   }, {
     path: '/user',
     component: User,

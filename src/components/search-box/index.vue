@@ -1,9 +1,7 @@
 <template>
   <div class="search-content con">
     <i class="iconfont icon-sousuo"></i>
-    <input 
-      @focus="handleFocus"
-      type="text" class="search-input" placeholder="搜索文章、用户、标签" />
+    <input @focus="handleFocus" type="text" class="search-input" placeholder="搜索文章、用户、标签" />
   </div>
 </template>
 
@@ -12,7 +10,7 @@ export default {
   methods: {
     handleFocus(event) {
       this.focused = true
-      this.$emit('focus',event)
+      this.$emit('focus', event)
     }
   }
 };

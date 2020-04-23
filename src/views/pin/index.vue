@@ -1,9 +1,12 @@
 <template>
-  <div>pin</div>
+  <div>$1</div>
 </template>
 
 <script>
-export default {};
+export default {
+
+}
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+</style>
