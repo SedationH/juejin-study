@@ -58,7 +58,7 @@ export default {
         },
         {
           path: "/home/6",
-          text: "人工智能"
+          text: "人工智能加强棒啊啊啊"
         }
       ]
     }

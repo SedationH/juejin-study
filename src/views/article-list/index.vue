@@ -1,5 +1,7 @@
 <template>
-  <div>list</div>
+  <div>
+    {{$route.path}}
+  </div>
 </template>
 
 <script>
