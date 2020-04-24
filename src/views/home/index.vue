@@ -23,7 +23,7 @@
     </transiton>
     <transiton name="main">
       <section class="main">
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </section>
     </transiton>
   </div>
@@ -100,4 +100,9 @@ export default {
         position relative
         right 14rem
         top 29rem
+.main
+  position absolute
+  top 148rem
+  bottom 0
+  width 100%
 </style>

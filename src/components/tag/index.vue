@@ -12,4 +12,11 @@ export default {
 }
 </script>
 
-<style lang='stylus' scoped></style>
+<style lang='stylus' scoped>
+.tag
+  border-radius 27.5rem
+  padding 10rem 27.5rem
+  background #f3f7fa
+  font-size 16rem
+
+</style>

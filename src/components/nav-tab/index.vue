@@ -85,12 +85,12 @@ export default {
     .nav-list
       display flex
       align-items center
-      white-space nowrap
 
       .nav-item
         flex 1
         padding 0 40rem
         font-size 30rem
+        white-space nowrap
 
         .router-link-active
           color #fff

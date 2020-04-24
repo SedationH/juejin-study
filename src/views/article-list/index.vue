@@ -1,12 +1,20 @@
 <template>
   <div class="article-list-con">
     <div class="tags-con">
-      <ul class="tags-list">
-        <li class="tag-item" v-for="item in tags" :key="item.tagId">
-          <tag :text="item.title"></tag>
+      <ul class="tags-list" :style="{'flex-wrap': showMoreTags ? 'wrap' : 'nowrap'}">
+        <li
+          class="tag-item"
+          v-for="item in tags"
+          :key="item.tagId"
+          @click="handleTagClick(item.tagId)"
+        >
+          <tag :text="item.title" :class="{'active': tagId === item.tagId}"></tag>
         </li>
       </ul>
-      <div class="show-con"></div>
+      <div class="show-con" @click="handleToggleShow">
+        <span v-if="!showMoreTags">+</span>
+        <span v-else>-</span>
+      </div>
       <div class="mask"></div>
     </div>
 
@@ -42,7 +50,8 @@ export default {
   data() {
     return {
       tags: this.sortTags || [],
-      tagId: ''
+      tagId: '',
+      showMoreTags: false
     }
   },
   created() {
@@ -54,29 +63,6 @@ export default {
     }
   },
   methods: {
-    // queryTag() {
-    //   const data = {
-    //     operationName: "",
-    //     query: "",
-    //     variables: { category: this.categoryId, limit: 15 },
-    //     extensions: { query: { id: "801e22bdc908798e1c828ba6b71a9fd9" } }
-    //   }
-    //   this.tags = [{
-    //     tagId: '',
-    //     title: '全部'
-    //   }]
-    //   this.tagId = this.tags[0].tagId
-    //   new Promise(resolve => {
-    //     resolve(query(data))
-    //   })
-    //     .then(
-    //       res => {
-    //         this.tags.push(...res.data.data.tagNav.items)
-    //         return res
-    //       }
-    //     )
-    // }
-
     async queryTag() {
       const data = {
         operationName: "",
@@ -92,12 +78,59 @@ export default {
       this.tags.push(...result.data.data.tagNav.items)
       this.tagId = this.tags[0].tagId
     },
-
     handleTagClick(tagId) {
       this.tagId = tagId
+    },
+    handleToggleShow() {
+      this.showMoreTags = !this.showMoreTags
     }
   }
 };
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+@import '../../assets/css/common.styl'
+
+.article-list-con
+  display flex
+  flex-direction column
+  height 100%
+
+  .tags-con
+    position relative
+    background-color #fff
+    overflow hidden
+    display flex
+
+    .tags-list
+      display flex
+      padding 0 20rem
+      overflow-x scroll
+      z-index 20
+
+      &::-webkit-scrollbar
+        display none
+
+      .tag-item
+        white-space nowrap
+        height 80rem
+        line-height 80rem
+        color $text-color
+        margin-right 20rem
+
+        .active
+          color #fff
+          background $primary-color
+
+    .show-con
+      z-index 20
+      display flex
+      align-items center
+      justify-content center
+      flex 0 0 50rem
+      height 50rem
+      font-size 40rem
+      background-color #3399FE
+      margin 10rem 0
+      border-radius 5px
+</style>
