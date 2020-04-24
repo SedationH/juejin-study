@@ -50,9 +50,14 @@ export default {
         })
       }
     })
-    console.log(arr)
     this.arr = arr
-    this.handleClick(0)
+    let path = this.$route.path
+    let { navList } = this
+    navList.forEach((e, i) => {
+      if (e.path === path) {
+        this.handleClick(i)
+      }
+    })
   },
   methods: {
     handleClick(i) {

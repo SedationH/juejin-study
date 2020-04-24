@@ -1,33 +1,39 @@
 <template>
   <div class="home">
-    <header class="header con">
-      <div class="header-top">
-        <div class="search-con">
-          <search-box @focus="handleFocus" />
+    <transiton name="header">
+      <header class="header con">
+        <div class="header-top">
+          <div class="search-con">
+            <search-box @focus="handleFocus" />
+          </div>
+          <div class="tag-setting-con">
+            <i class="iconfont icon-shezhi"></i>
+            <span>设置</span>
+          </div>
         </div>
-        <div class="tag-setting-con">
-          <i class="iconfont icon-shezhi"></i>
-          <span>设置</span>
+        <div class="header-bottom">
+          <div class="nav-tab-con">
+            <nav-tab :navList="navList"></nav-tab>
+          </div>
+          <div class="triangle-con">
+            <div class="triangle"></div>
+          </div>
         </div>
-      </div>
-      <div class="header-bottom">
-        <div class="nav-tab-con">
-          <nav-tab :navList="navList"></nav-tab>
-        </div>
-        <div class="triangle-con">
-          <div class="triangle"></div>
-        </div>
-      </div>
-    </header>
-    <section class="main">
-      <router-view></router-view>
-    </section>
+      </header>
+    </transiton>
+    <transiton name="main">
+      <section class="main">
+        <router-view></router-view>
+      </section>
+    </transiton>
   </div>
 </template>
 
 <script>
 import SearchBox from "../../components/search-box"
 import NavTab from '../../components/nav-tab'
+import { homePathText } from '../../router/home'
+
 export default {
   components: {
     SearchBox,
@@ -35,32 +41,7 @@ export default {
   },
   data() {
     return {
-      navList: [
-        {
-          path: "/home/1",
-          text: "推荐"
-        },
-        {
-          path: "/home/2",
-          text: "后端"
-        },
-        {
-          path: "/home/3",
-          text: "人工智能"
-        },
-        {
-          path: "/home/4",
-          text: "Android"
-        },
-        {
-          path: "/home/5",
-          text: "IOS"
-        },
-        {
-          path: "/home/6",
-          text: "人工智能加强棒啊啊啊"
-        }
-      ]
+      navList: homePathText
     }
   },
   methods: {
