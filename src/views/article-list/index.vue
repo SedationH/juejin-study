@@ -11,24 +11,31 @@
           <tag :text="item.title" :class="{'active': tagId === item.tagId}"></tag>
         </li>
       </ul>
-      <div class="show-con" @click="handleToggleShow">
+      <div v-if="hasTags" class="show-con" @click="handleToggleShow">
         <span v-if="!showMoreTags">+</span>
         <span v-else>-</span>
       </div>
       <div class="mask"></div>
     </div>
 
-    <div class="list"></div>
-
-    <div class="icon-add-con">
-      <i class="iconfont icon-Add"></i>
-    </div>
+    <list>
+      <ul class="article-pre-list">
+        <li class="article-pre-item" v-for="item in edges" :key="item.id">
+          <!-- <router-link> -->
+          <article-preview :article="item"></article-preview>
+          <!-- </router-link>> -->
+        </li>
+      </ul>
+    </list>
   </div>
 </template>
 
 <script>
 import Tag from '../../components/tag'
 import { query } from '../../api/home'
+import List from '../../components/list'
+import ArticlePreview from '../../components/article-preview'
+
 
 export default {
   props: {
@@ -45,13 +52,14 @@ export default {
     }
   },
   components: {
-    Tag
+    Tag, List, ArticlePreview
   },
   data() {
     return {
       tags: this.sortTags || [],
       tagId: '',
-      showMoreTags: false
+      showMoreTags: false,
+      edges: []
     }
   },
   created() {
@@ -61,6 +69,7 @@ export default {
     if (this.tags.length) {
       this.tagId = this.tags[0].tagId
     }
+    this.refresh()
   },
   methods: {
     async queryTag() {
@@ -80,9 +89,40 @@ export default {
     },
     handleTagClick(tagId) {
       this.tagId = tagId
+      this.refresh()
     },
     handleToggleShow() {
       this.showMoreTags = !this.showMoreTags
+    },
+    async refresh() {
+      await this.query()
+    },
+    async query() {
+      let data = await query(this.assembleQueryData())
+      let items = data.data.data.articleFeed.items
+      this.edges = []
+      items.edges.forEach(e => {
+        this.edges.push(e.node)
+      })
+      console.log(this.edges)
+    },
+    assembleQueryData() {
+      const data = {
+        operationName: '',
+        query: '',
+        variables: { first: 20, after: '', order: 'POPULAR' },
+        extensions: { query: { id: '21207e9ddb1de777adeaca7a2fb38030' } }
+      }
+      data.variables.category = this.categoryId
+      if (this.tagId) {
+        if (this.categoryId) {
+          data.variables.tags = [this.tagId]
+        } else {
+          data.variables.order = this.tagId
+        }
+      }
+      console.log(data)
+      return data
     }
   }
 };
@@ -105,8 +145,8 @@ export default {
     .tags-list
       display flex
       padding 0 20rem
+      margin-right 45rem
       overflow-x scroll
-      z-index 20
 
       &::-webkit-scrollbar
         display none
@@ -123,14 +163,17 @@ export default {
           background $primary-color
 
     .show-con
-      z-index 20
+      position absolute
       display flex
       align-items center
       justify-content center
-      flex 0 0 50rem
-      height 50rem
       font-size 40rem
       background-color #3399FE
-      margin 10rem 0
       border-radius 5px
+      right 0
+      top 16rem
+      width 40rem
+
+.article-pre-item
+  margin-bottom 20rem
 </style>
