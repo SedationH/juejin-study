@@ -74,10 +74,8 @@ export default {
   methods: {
     async queryTag() {
       const data = {
-        operationName: "",
-        query: "",
         variables: { category: this.categoryId, limit: 15 },
-        extensions: { query: { id: "801e22bdc908798e1c828ba6b71a9fd9" } }
+        extensions: { query: { id: '801e22bdc908798e1c828ba6b71a9fd9' } }
       }
       let result = await query(data)
       this.tags = [{
@@ -108,10 +106,8 @@ export default {
     },
     assembleQueryData() {
       const data = {
-        operationName: '',
-        query: '',
         variables: { first: 20, after: '', order: 'POPULAR' },
-        extensions: { query: { id: '21207e9ddb1de777adeaca7a2fb38030' } }
+        extensions: { query: { id: this.queryId } }
       }
       data.variables.category = this.categoryId
       if (this.tagId) {
