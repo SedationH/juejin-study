@@ -49,7 +49,7 @@ handleTagClick(tagId) {
 
 而tab切换则是直接重新渲染整个article-list，因为外层
 
-![image-20200426160744528](/Users/sedationh/Library/Application Support/typora-user-images/image-20200426160744528.png)
+![image-20200426160744528](http://picbed.sedationh.cn/image-20200426160744528.png)
 
 
 

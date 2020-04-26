@@ -1,6 +1,6 @@
 <template>
   <div class="article-list-con">
-    <div class="tags-con">
+    <div class="tags-con" ref="tags-con">
       <ul class="tags-list" :style="{'flex-wrap': showMoreTags ? 'wrap' : 'nowrap'}">
         <li
           class="tag-item"
@@ -18,7 +18,7 @@
       <div class="mask"></div>
     </div>
 
-    <list>
+    <list :onPullingDown="refresh">
       <ul class="article-pre-list">
         <li class="article-pre-item" v-for="item in edges" :key="item.id">
           <!-- <router-link> -->
@@ -35,7 +35,7 @@ import Tag from '../../components/tag'
 import { query } from '../../api/home'
 import List from '../../components/list'
 import ArticlePreview from '../../components/article-preview'
-
+import BScroll from 'better-scroll'
 
 export default {
   props: {
@@ -71,7 +71,19 @@ export default {
     }
     this.refresh()
   },
+  mounted() {
+    this.$tagsCon = this.$refs['tags-con']
+    console.log(this.$tagsCon.clientWidth)
+    this.initSroll()
+  },
   methods: {
+    initSroll() {
+      this.scroll = new BScroll(this.$tagsCon, {
+        click: true,
+        scrollX: true,
+        scrollY: false
+      })
+    },
     async queryTag() {
       const data = {
         variables: { category: this.categoryId, limit: 15 },
@@ -102,7 +114,7 @@ export default {
       items.edges.forEach(e => {
         this.edges.push(e.node)
       })
-      console.log(this.edges)
+      console.log(items)
     },
     assembleQueryData() {
       const data = {
@@ -117,7 +129,6 @@ export default {
           data.variables.order = this.tagId
         }
       }
-      console.log(data)
       return data
     }
   }
