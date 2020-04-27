@@ -18,7 +18,7 @@
       <div class="mask"></div>
     </div>
 
-    <list :onPullingDown="refresh">
+    <list :onPullingDown="refresh" :onPullingUp="loadMore">
       <ul class="article-pre-list">
         <li class="article-pre-item" v-for="item in edges" :key="item.id">
           <!-- <router-link> -->
@@ -59,7 +59,8 @@ export default {
       tags: this.sortTags || [],
       tagId: '',
       showMoreTags: false,
-      edges: []
+      edges: [],
+      isRefresh: false,
     }
   },
   created() {
@@ -105,23 +106,34 @@ export default {
       this.showMoreTags = !this.showMoreTags
     },
     async refresh() {
+      this.isRefresh = true
+      this.endCursor = ''
       await this.query()
+      this.isRefresh = false
     },
     async query() {
       let data = await query(this.assembleQueryData())
       let items = data.data.data.articleFeed.items
-      this.edges = []
+      if (this.isRefresh) {
+        this.edges = []
+      }
       items.edges.forEach(e => {
         this.edges.push(e.node)
       })
-      console.log(items)
+      this.hasNextPage = items.pageInfo.hasNextPage
+      this.endCursor = items.pageInfo.endCursor
     },
     assembleQueryData() {
       const data = {
         variables: { first: 20, after: '', order: 'POPULAR' },
         extensions: { query: { id: this.queryId } }
       }
-      data.variables.category = this.categoryId
+      if (this.categoryId) {
+        data.variables.category = this.categoryId
+      }
+      if (this.hasNextPage && this.endCursor) {
+        data.variables.after = this.endCursor
+      }
       if (this.tagId) {
         if (this.categoryId) {
           data.variables.tags = [this.tagId]
@@ -130,6 +142,9 @@ export default {
         }
       }
       return data
+    },
+    async loadMore() {
+      await this.query()
     }
   }
 };

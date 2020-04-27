@@ -52,12 +52,22 @@ export default {
           probeType: this.probeType
         }
       )
-
-      if(typeof this.onPullingDown === 'function'){
-        this.scroll.on('pullingDown',async () => {
+      // refresh
+      if (typeof this.onPullingDown === 'function') {
+        this.scroll.on('pullingDown', async () => {
           this.onPullingDown()
+            .then(() => {
+              this.scroll.finishPullUp()
+            })
         })
       }
+      // more
+      this.scroll.on('pullingUp', async () => {
+        this.onPullingUp()
+          .then(() => {
+            this.scroll.finishPullUp()
+          })
+      })
     }
   }
 }
