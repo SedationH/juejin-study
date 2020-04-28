@@ -18,7 +18,7 @@
       <div class="mask"></div>
     </div>
 
-    <list :onPullingDown="refresh" :onPullingUp="loadMore">
+    <list :onPullingDown="refresh" :onPullingUp="loadMore" :isRefresh="isRefresh">
       <ul class="article-pre-list">
         <li class="article-pre-item" v-for="item in edges" :key="item.id">
           <!-- <router-link> -->
@@ -106,6 +106,7 @@ export default {
       this.showMoreTags = !this.showMoreTags
     },
     async refresh() {
+      console.log('refresh')
       this.isRefresh = true
       this.endCursor = ''
       await this.query()

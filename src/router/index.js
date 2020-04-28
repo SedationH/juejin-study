@@ -18,6 +18,7 @@ const routes = [
   }, {
     path: '/home',
     component: Home,
+    redirect: '/home/recommended',
     children: homeRoutes
   }, {
     path: '/user',

@@ -3,13 +3,24 @@
     <div class="list-content">
       <slot></slot>
     </div>
+    <div class="refresh-con">
+      <refresh v-if="isRefresh"></refresh>
+    </div>
+    <div class="loading-con">
+      <loading v-if="isLoading"></loading>
+    </div>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import Refresh from '../refresh'
+import Loading from '../loading'
 
 export default {
+  components: {
+    Refresh, Loading
+  },
   props: {
     click: {
       type: Boolean,
@@ -30,7 +41,7 @@ export default {
       type: Number,
       default: 1
     },
-    refreshing: {
+    isRefresh: {
       type: Boolean,
       default: false
     },
@@ -40,6 +51,11 @@ export default {
   },
   mounted() {
     this.initBScroll()
+  },
+  data() {
+    return {
+      isLoading: false
+    }
   },
   methods: {
     initBScroll() {
@@ -55,16 +71,19 @@ export default {
       // refresh
       if (typeof this.onPullingDown === 'function') {
         this.scroll.on('pullingDown', async () => {
+          this.refreshing = true
           this.onPullingDown()
             .then(() => {
-              this.scroll.finishPullUp()
+              this.scroll.finishPullDown()
             })
         })
       }
       // more
       this.scroll.on('pullingUp', async () => {
+        this.isLoading = true
         this.onPullingUp()
           .then(() => {
+            this.isLoading = false
             this.scroll.finishPullUp()
           })
       })
@@ -78,4 +97,20 @@ export default {
   position relative
   height 100%
   overflow hidden
+
+  .refresh-con
+    width 80rem
+    height 80rem
+    position absolute
+    top 50rem
+    left 50%
+    transform translateX(-50%)
+
+  .loading-con
+    width 80rem
+    height 80rem
+    width 100%
+    display flex
+    justify-content center
+    background-color pink
 </style>
