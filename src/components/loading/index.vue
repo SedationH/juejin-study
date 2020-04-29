@@ -1,5 +1,5 @@
 <template>
-  <div class="loading">123</div>
+  <div class="loading"></div>
 </template>
 
 <style lang='stylus' scoped>

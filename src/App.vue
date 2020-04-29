@@ -19,17 +19,23 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "./assets/css/common.styl"
-html,body,#app
+@import './assets/css/common.styl'
+
+html, body, #app
   width 100%
   height 100%
   background $gray-color
+
+#app
+  padding-bottom 85rem
+
 .main-con
   height 100%
+
 .footer-con
-    position fixed
-    bottom 0
-    left 0
-    right 0
-    height 85rem
+  position fixed
+  bottom 0
+  left 0
+  right 0
+  height 85rem
 </style>

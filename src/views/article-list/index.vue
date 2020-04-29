@@ -15,7 +15,6 @@
         <span v-if="!showMoreTags">+</span>
         <span v-else>-</span>
       </div>
-      <div class="mask"></div>
     </div>
 
     <list :onPullingDown="refresh" :onPullingUp="loadMore" :isRefresh="isRefresh">

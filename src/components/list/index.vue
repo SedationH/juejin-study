@@ -75,6 +75,7 @@ export default {
           this.onPullingDown()
             .then(() => {
               this.scroll.finishPullDown()
+              this.isLoading = false
             })
         })
       }
@@ -83,8 +84,12 @@ export default {
         this.isLoading = true
         this.onPullingUp()
           .then(() => {
-            this.isLoading = false
-            this.scroll.finishPullUp()
+            console.time()
+            setTimeout(() => {
+              console.timeEnd()
+              this.isLoading = false
+              this.scroll.finishPullUp()
+            },1000)
           })
       })
     }
@@ -112,5 +117,4 @@ export default {
     width 100%
     display flex
     justify-content center
-    background-color pink
 </style>

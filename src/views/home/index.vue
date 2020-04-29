@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <transiton name="header">
       <header class="header con">
         <div class="header-top">
           <div class="search-con">
@@ -20,12 +19,9 @@
           </div>
         </div>
       </header>
-    </transiton>
-    <transiton name="main">
       <section class="main">
         <router-view :key="$route.path"></router-view>
       </section>
-    </transiton>
   </div>
 </template>
 
@@ -55,6 +51,9 @@ export default {
 
 <style lang="stylus" scoped>
 @import '../../assets/css/common.styl'
+.home
+  height 100%
+  position relative
 
 .header
   height 148rem
